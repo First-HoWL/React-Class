@@ -121,14 +121,12 @@ function ClickerFeature({ firstButton, secButton, thirdButton }) {
   );
 }
 
-function Note({ name, email, gender }) {
+function Note({ profile }) {
   // let isEdit = true;
   const [isEditName, setisEditName] = useState(false);
   const [isEditEmail, setisEditEmail] = useState(false);
-  const [textAreaName, settextAreaName] = useState(name);
-  const [textAreaEmail, settextAreaEmail] = useState(email);
-  const [select1, setselect1] = useState(gender);
-  const [isEditselect1, setisEditselect1] = useState("");
+  const [profile1, setprofile] = useState(profile);
+  const [isEditselect1, setisEditselect1] = useState(false);
 
   return (
     <>
@@ -141,16 +139,20 @@ function Note({ name, email, gender }) {
         >
           <textarea
             onChange={(e) => {
-              settextAreaName(e.target.value);
+              setprofile({
+                name: e.target.value,
+                email: profile1.email,
+                gender: profile1.gender,
+              });
             }}
             required
-            value={textAreaName}
+            value={profile1.name}
           ></textarea>
           <button type="submit">Save</button>
         </form>
       ) : (
         <>
-          <p>{textAreaName}</p>
+          <p>{profile1.name}</p>
           <button
             onClick={() => {
               setisEditName(true);
@@ -168,16 +170,20 @@ function Note({ name, email, gender }) {
         >
           <textarea
             onChange={(e) => {
-              settextAreaEmail(e.target.value);
+              setprofile({
+                name: profile1.name,
+                email: e.target.value,
+                gender: profile1.gender,
+              });
             }}
             required
-            value={textAreaEmail}
+            value={profile1.email}
           ></textarea>
           <button type="submit">Save</button>
         </form>
       ) : (
         <>
-          <p>{textAreaEmail}</p>
+          <p>{profile1.email}</p>
           <button
             onClick={() => {
               setisEditEmail(true);
@@ -196,9 +202,13 @@ function Note({ name, email, gender }) {
         >
           <select
             onChange={(event) => {
-              setselect1(event.target.value);
+              setprofile({
+                name: profile1.name,
+                email: profile1.email,
+                gender: event.target.value,
+              });
             }}
-            value={select1}
+            value={profile1.gender}
           >
             <option value="Man"> Man </option>
             <option value="Woman"> Woman </option>
@@ -209,7 +219,7 @@ function Note({ name, email, gender }) {
         </form>
       ) : (
         <>
-          <p>{select1}</p>
+          <p>{profile1.gender}</p>
           <button
             onClick={() => {
               setisEditselect1(true);
@@ -226,7 +236,9 @@ function Note({ name, email, gender }) {
 export default function App() {
   return (
     <>
-      <Note name="HoWL" email="HoWL@gmail.com" gender="Man" />
+      <Note
+        profile={{ name: "HoWL", email: "HoWL@gmail.com", gender: "Man" }}
+      />
     </>
   );
 }
