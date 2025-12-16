@@ -121,11 +121,112 @@ function ClickerFeature({ firstButton, secButton, thirdButton }) {
   );
 }
 
+function Note({ name, email, gender }) {
+  // let isEdit = true;
+  const [isEditName, setisEditName] = useState(false);
+  const [isEditEmail, setisEditEmail] = useState(false);
+  const [textAreaName, settextAreaName] = useState(name);
+  const [textAreaEmail, settextAreaEmail] = useState(email);
+  const [select1, setselect1] = useState(gender);
+  const [isEditselect1, setisEditselect1] = useState("");
+
+  return (
+    <>
+      <h3>Notes</h3>
+      {isEditName ? (
+        <form
+          onSubmit={() => {
+            setisEditName(false);
+          }}
+        >
+          <textarea
+            onChange={(e) => {
+              settextAreaName(e.target.value);
+            }}
+            required
+            value={textAreaName}
+          ></textarea>
+          <button type="submit">Save</button>
+        </form>
+      ) : (
+        <>
+          <p>{textAreaName}</p>
+          <button
+            onClick={() => {
+              setisEditName(true);
+            }}
+          >
+            Edit
+          </button>
+        </>
+      )}
+      {isEditEmail ? (
+        <form
+          onSubmit={() => {
+            setisEditEmail(false);
+          }}
+        >
+          <textarea
+            onChange={(e) => {
+              settextAreaEmail(e.target.value);
+            }}
+            required
+            value={textAreaEmail}
+          ></textarea>
+          <button type="submit">Save</button>
+        </form>
+      ) : (
+        <>
+          <p>{textAreaEmail}</p>
+          <button
+            onClick={() => {
+              setisEditEmail(true);
+            }}
+          >
+            Edit
+          </button>
+        </>
+      )}
+
+      {isEditselect1 ? (
+        <form
+          onSubmit={() => {
+            setisEditselect1(false);
+          }}
+        >
+          <select
+            onChange={(event) => {
+              setselect1(event.target.value);
+            }}
+            value={select1}
+          >
+            <option value="Man"> Man </option>
+            <option value="Woman"> Woman </option>
+            <option value="None"> None </option>
+            <option value="Croissant"> Croissant </option>
+          </select>
+          <button type="submit">Save</button>
+        </form>
+      ) : (
+        <>
+          <p>{select1}</p>
+          <button
+            onClick={() => {
+              setisEditselect1(true);
+            }}
+          >
+            Edit
+          </button>
+        </>
+      )}
+    </>
+  );
+}
+
 export default function App() {
   return (
     <>
-      {/* <InputFeature /> */}
-      <ClickerFeature firstButton={1} secButton={-1} thirdButton={10} />
+      <Note name="HoWL" email="HoWL@gmail.com" gender="Man" />
     </>
   );
 }
