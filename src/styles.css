@@ -42,3 +42,23 @@ div.circleBtn {
 div.radButton.on {
   justify-content: flex-end;
 }
+
+div.navBar {
+  display: flex;
+  width: 100vw;
+  height: 50px;
+  padding: 10px;
+  background-color: white;
+}
+div.navBar > button {
+  border: 0;
+  background-color: white;
+}
+
+div.navBar > button.active {
+  border-bottom: 1px solid #5fbefa;
+}
+
+img {
+  height: 300px;
+}

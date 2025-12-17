@@ -32,24 +32,83 @@ function ThemeSwitch({ onClick }) {
   );
 }
 
+function PageButton({ onClick, message, active }) {
+  return (
+    <button onClick={onClick} className={active ? "active" : ""}>
+      {message}
+    </button>
+  );
+}
+
+function PagesSwitch({ onChange, activePage }) {
+  return (
+    <>
+      <div class="navBar">
+        <PageButton
+          onClick={() => onChange(1)}
+          active={activePage == 1}
+          message="First"
+        />
+        <PageButton
+          onClick={() => onChange(2)}
+          active={activePage == 2}
+          message="Seccond"
+        />
+        <PageButton
+          onClick={() => onChange(3)}
+          active={activePage == 3}
+          message="Third"
+        />
+      </div>
+    </>
+  );
+}
+
+function PagesWindow() {
+  const [activePage, setActivePage] = useState(1);
+  return (
+    <>
+      <PagesSwitch
+        onChange={(num) => setActivePage(num)}
+        activePage={activePage}
+      />
+      {activePage == 1 ? (
+        <FirstPage />
+      ) : activePage == 2 ? (
+        <SecPage />
+      ) : activePage == 3 ? (
+        <ThirdPage />
+      ) : (
+        ""
+      )}
+      <p>{activePage}</p>
+    </>
+  );
+}
+
+function FirstPage() {
+  return (
+    <img src="https://shuba.life/static/content/thumbs/660x440/7/f4/b5ymju---c3x2x50px50p-up--0d6385942b23a21478b21096172ecf47.jpg" />
+  );
+}
+function SecPage() {
+  return (
+    <img src="https://goodfruits.com.ua/wp-content/uploads/2024/02/tomat-krasn%D1%8Bj-scaled-1.jpg" />
+  );
+}
+function ThirdPage() {
+  return (
+    <img src="https://images.prom.ua/1289180610_w$%7Bwidth%7D_h$%7Bheight%7D_vse-pro-mango.jpg" />
+  );
+}
+
 export default function App() {
   const [theme, setTheme] = useState("");
   const [isPressed, setIsPressed] = useState(false);
   return (
     <>
-      <main /*className={isPressed ? "darkTheme" : ""}*/>
-        <ThemeSwitch onClick={(pressed) => setIsPressed(pressed)} />
-        <h2>Hello World!</h2>
-        <input type="radio" checked={isPressed}></input>
-        <p>
-          {/* {theme == ""
-            ? "White Theme"
-            : theme == "darkTheme"
-            ? "Dark Theme"
-            : theme == "greenTheme"
-            ? "Green Theme"
-            : "Blue Theme"} */}
-        </p>
+      <main>
+        <PagesWindow />
       </main>
 
       {/* <PersonalSite
