@@ -2,27 +2,24 @@
   font-family: sans-serif;
   text-align: center;
 }
-
-div.calculator {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid black;
-  border-radius: 10px;
-  align-items: center;
-  flex-direction: column;
-}
-div.calculator input,
-select,
-button {
-  padding: 7px;
-}
-div.counter button,
-span {
-  padding: 10px;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-button[type="submit"] {
-  display: block;
+main {
+  min-height: 100vh;
+  background-color: rgb(230, 180, 115);
+}
+main.darkTheme {
+  background-color: rgb(17, 15, 12);
+  color: white;
+}
+main.greenTheme {
+  background-color: rgb(3, 71, 0);
+  color: rgb(238, 136, 136);
+}
+main.blueTheme {
+  background-color: rgb(2, 7, 70);
+  color: rgb(192, 7, 216);
 }

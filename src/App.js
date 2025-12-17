@@ -1,89 +1,6 @@
 import { useState } from "react";
 import "./styles.css";
 
-function func() {
-  alert("hello World");
-}
-
-// var input1;
-// var input2;
-// var input3;
-
-// function CalculatorFeature() {
-//   //const [header, setheader] = useState("My first Ract App");
-//   const [input1, setinput1] = useState("");
-//   const [select1, setselect1] = useState("+");
-//   const [input2, setinput2] = useState("");
-//   const [output, setoutput] = useState("");
-
-//   function changeOutput() {
-//     let out;
-//     if (select1 == "+") out = parseInt(input1) + parseInt(input2);
-//     else if (select1 == "-") out = parseInt(input1) - parseInt(input2);
-//     else if (select1 == "/") out = parseInt(input1) / parseInt(input2);
-//     else if (select1 == "*") out = parseInt(input1) * parseInt(input2);
-//     setoutput(out);
-//   }
-
-//   function setinp1(inp) {
-//     setinput1(inp);
-//   }
-//   function setinp2(inp) {
-//     setinput2(inp);
-//   }
-
-//   return (
-//     <>
-//       <div className="calculator">
-//         <div>
-//           <input
-//             type="text"
-//             onChange={(event) => {
-//               setinput1(event.target.value);
-//             }}
-//             placeholder="input 1"
-//           />
-//           <select
-//             onChange={(event) => {
-//               setselect1(event.target.value);
-//             }}
-//           >
-//             <option value="+"> + </option>
-//             <option value="-"> - </option>
-//             <option value="*"> * </option>
-//             <option value="/"> / </option>
-//           </select>
-//         </div>
-//         <div>
-//           <input
-//             type="text"
-//             onChange={(event) => {
-//               setinput2(event.target.value);
-//             }}
-//             placeholder="input 2"
-//           />
-//           <button onClick={changeOutput}>Start</button>
-//           <span>{output}</span>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
-// function InputFeature() {
-//   return (
-//     <>
-//       <div>
-//         <input
-//           onChange={(event) => {
-//             input1 = event.target.value;
-//           }}
-//         />
-//       </div>
-//     </>
-//   );
-// }
-
 function ClickerFeature({ firstButton, secButton, thirdButton }) {
   const [clicked, setclick] = useState(0);
 
@@ -233,12 +150,72 @@ function Note({ profile }) {
   );
 }
 
-export default function App() {
+function PersonalSite({ profile }) {
   return (
     <>
-      <Note
+      <h3>
+        {profile.firstName} {profile.secName} {profile.surName}
+      </h3>
+      <h4>{profile.phone}</h4>
+      <h4>{profile.email}</h4>
+      <h4>{profile.adress}</h4>
+      <h4>{profile.workExperience}</h4>
+      <h4>{profile.skills}</h4>
+      <img src={profile.img}></img>
+    </>
+  );
+}
+
+function ThemeSwitch({ onClick }) {
+  return <button onClick={onClick}>Switch theme</button>;
+}
+
+export default function App() {
+  const [theme, setTheme] = useState("");
+  return (
+    <>
+      <main className={theme}>
+        <ThemeSwitch
+          onClick={() =>
+            setTheme(
+              theme == ""
+                ? "darkTheme"
+                : theme == "darkTheme"
+                ? "greenTheme"
+                : theme == "greenTheme"
+                ? "blueTheme"
+                : ""
+            )
+          }
+        />
+        <h2>Hello World!</h2>
+        <p>
+          {theme == ""
+            ? "White Theme"
+            : theme == "darkTheme"
+            ? "Dark Theme"
+            : theme == "greenTheme"
+            ? "Green Theme"
+            : "Blue Theme"}
+        </p>
+      </main>
+
+      {/* <Note
         profile={{ name: "HoWL", email: "HoWL@gmail.com", gender: "Man" }}
-      />
+      /> */}
+      {/* <PersonalSite
+        profile={{
+          firstName: "Denis",
+          secName: "Hello",
+          surName: "World!",
+          phone: "0123456789",
+          email: "email@email.com",
+          adress: "none",
+          workExperience: "2 years",
+          skills: "lots of",
+          img: "https://media.istockphoto.com/id/92202969/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BC%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B%D0%B5-%D1%88%D0%B8%D0%BC%D0%BF%D0%B0%D0%BD%D0%B7%D0%B5-simia-troglodytes-6-years-old.jpg?s=612x612&w=0&k=20&c=ROdNqiuQmQo7KtQmWaUduxUKQzPSK1TTf3XA8B5eJZI=",
+        }}
+      /> */}
     </>
   );
 }
