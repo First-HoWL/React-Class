@@ -167,27 +167,21 @@ function PersonalSite({ profile }) {
 }
 
 function ThemeSwitch({ onClick }) {
-  return <button onClick={onClick}>Switch theme</button>;
+  const [ispressed, setIsPressed] = useState(false);
+  return (
+    <div class="radButton">
+      <button>Switch theme</button>
+    </div>
+  );
 }
 
 export default function App() {
   const [theme, setTheme] = useState("");
+  const [isPressed, setIsPressed] = useState("");
   return (
     <>
       <main className={theme}>
-        <ThemeSwitch
-          onClick={() =>
-            setTheme(
-              theme == ""
-                ? "darkTheme"
-                : theme == "darkTheme"
-                ? "greenTheme"
-                : theme == "greenTheme"
-                ? "blueTheme"
-                : ""
-            )
-          }
-        />
+        <ThemeSwitch onClick={(pressed) => setIsPressed(pressed)} />
         <h2>Hello World!</h2>
         <p>
           {theme == ""
