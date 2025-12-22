@@ -43,7 +43,7 @@ function PageButton({ onClick, message, active }) {
 function PagesSwitch({ onChange, activePage }) {
   return (
     <>
-      <div class="navBar">
+      <div className="navBar">
         <PageButton
           onClick={() => onChange(1)}
           active={activePage == 1}
@@ -102,28 +102,85 @@ function ThirdPage() {
   );
 }
 
+function GetImage({ url, bigtext, desc }) {
+  return (
+    <>
+      <div className="card">
+        <img
+          src={url}
+          onError={(e) => {
+            e.target.src =
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq28kcrRkckC-x3mW3IMKjn2HHq8gR8_oVxA&s";
+          }}
+        ></img>
+        <h3>{bigtext}</h3>
+        <p>{desc}</p>
+      </div>
+    </>
+  );
+}
+
+function Func() {
+  const [newimg, setImg] = useState("");
+  const [bigtext, setBigtext] = useState("");
+  const [newdesc, setDesc] = useState("");
+  const [imgslist, setImgsList] = useState();
+  return (
+    <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (imgslist) {
+            setImgsList([
+              ...imgslist,
+              <GetImage url={newimg} bigtext={bigtext} desc={newdesc} />,
+            ]);
+          } else {
+            setImgsList([
+              <GetImage url={newimg} bigtext={bigtext} desc={newdesc} />,
+            ]);
+          }
+        }}
+      >
+        <input
+          type="text"
+          value={newimg}
+          onChange={(e) => setImg(e.target.value)}
+          placeholder="src"
+        />
+        <br />
+        <input
+          type="text"
+          value={bigtext}
+          onChange={(e) => setBigtext(e.target.value)}
+          placeholder="big text"
+        />
+        <br />
+        <input
+          type="text"
+          value={newdesc}
+          onChange={(e) => setDesc(e.target.value)}
+          placeholder="desc"
+        />
+        <br />
+        <button type="submit">Add image</button>
+      </form>
+
+      <h3>Image: </h3>
+      <div className="galery">{imgslist}</div>
+    </>
+  );
+}
+
 export default function App() {
   const [theme, setTheme] = useState("");
   const [isPressed, setIsPressed] = useState(false);
   return (
     <>
-      <main>
+      {/* <main>
         <PagesWindow />
-      </main>
-
-      {/* <PersonalSite
-        profile={{
-          firstName: "Denis",
-          secName: "Hello",
-          surName: "World!",
-          phone: "0123456789",
-          email: "email@email.com",
-          adress: "none",
-          workExperience: "2 years",
-          skills: "lots of",
-          img: "https://media.istockphoto.com/id/92202969/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BC%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B%D0%B5-%D1%88%D0%B8%D0%BC%D0%BF%D0%B0%D0%BD%D0%B7%D0%B5-simia-troglodytes-6-years-old.jpg?s=612x612&w=0&k=20&c=ROdNqiuQmQo7KtQmWaUduxUKQzPSK1TTf3XA8B5eJZI=",
-        }}
-      /> */}
+      </main> */}
+      <Func />
     </>
   );
 }
