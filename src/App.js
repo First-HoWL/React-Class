@@ -1,113 +1,13 @@
 import { useState } from "react";
 import "./styles.css";
 
-function PersonalSite({ profile }) {
-  return (
-    <>
-      <h3>
-        {profile.firstName} {profile.secName} {profile.surName}
-      </h3>
-      <h4>{profile.phone}</h4>
-      <h4>{profile.email}</h4>
-      <h4>{profile.adress}</h4>
-      <h4>{profile.workExperience}</h4>
-      <h4>{profile.skills}</h4>
-      <img src={profile.img}></img>
-    </>
-  );
-}
-
-function ThemeSwitch({ onClick }) {
-  const [ispressed, setIsPressed] = useState(true);
-  return (
-    <div
-      onClick={() => {
-        setIsPressed(ispressed ? false : true);
-        onClick(ispressed);
-      }}
-      className={ispressed ? "radButton" : "radButton on"}
-    >
-      <div className="circleBtn"></div>
-    </div>
-  );
-}
-
-function PageButton({ onClick, message, active }) {
-  return (
-    <button onClick={onClick} className={active ? "active" : ""}>
-      {message}
-    </button>
-  );
-}
-
-function PagesSwitch({ onChange, activePage }) {
-  return (
-    <>
-      <div className="navBar">
-        <PageButton
-          onClick={() => onChange(1)}
-          active={activePage == 1}
-          message="First"
-        />
-        <PageButton
-          onClick={() => onChange(2)}
-          active={activePage == 2}
-          message="Seccond"
-        />
-        <PageButton
-          onClick={() => onChange(3)}
-          active={activePage == 3}
-          message="Third"
-        />
-      </div>
-    </>
-  );
-}
-
-function PagesWindow() {
-  const [activePage, setActivePage] = useState(1);
-  return (
-    <>
-      <PagesSwitch
-        onChange={(num) => setActivePage(num)}
-        activePage={activePage}
-      />
-      {activePage == 1 ? (
-        <FirstPage />
-      ) : activePage == 2 ? (
-        <SecPage />
-      ) : activePage == 3 ? (
-        <ThirdPage />
-      ) : (
-        ""
-      )}
-      <p>{activePage}</p>
-    </>
-  );
-}
-
-function FirstPage() {
-  return (
-    <img src="https://shuba.life/static/content/thumbs/660x440/7/f4/b5ymju---c3x2x50px50p-up--0d6385942b23a21478b21096172ecf47.jpg" />
-  );
-}
-function SecPage() {
-  return (
-    <img src="https://goodfruits.com.ua/wp-content/uploads/2024/02/tomat-krasn%D1%8Bj-scaled-1.jpg" />
-  );
-}
-function ThirdPage() {
-  return (
-    <img src="https://images.prom.ua/1289180610_w$%7Bwidth%7D_h$%7Bheight%7D_vse-pro-mango.jpg" />
-  );
-}
-
 function GetImage({ url, bigtext, desc }) {
+  console.log(url);
   return (
     <>
       <div className="card">
         <img
-          src={url}
+          src={url == "" ? "  " : url}
           onError={(e) => {
             e.target.src =
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq28kcrRkckC-x3mW3IMKjn2HHq8gR8_oVxA&s";
@@ -172,15 +72,132 @@ function Func() {
   );
 }
 
+function RegisterForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    email: "",
+    gender: "Man",
+  });
+  const [errors, setErrors] = useState({});
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  function validation() {
+    const newErrors = {};
+    if (formData.name.trim() === "") {
+      newErrors.name = "Поле не може бути порожнім!";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Ім'я повинно містити щонайменше 3 символи!";
+    }
+    if (formData.age.trim() === "") {
+      newErrors.age = "Поле не може бути порожнім!";
+    } else if (formData.age < 0) {
+      newErrors.age = "Вік не може бути від'ємним";
+    }
+    if (formData.email.trim() === "") {
+      newErrors.email = "Поле не може бути порожнім!";
+    } else if (formData.email.startsWith("@")) {
+      newErrors.email = "Емаіл не може починатися з @!";
+    } else if (formData.email.endsWith("@")) {
+      newErrors.email = "Емаіл не може закінчуватися на @!";
+    } else if (!formData.email.includes("@")) {
+      newErrors.email = "Емаіл має включати @!";
+    }
+    if (formData.gender.trim() === "Croissant") {
+      newErrors.gender = "Ви не круасан!";
+    }
+
+    return newErrors;
+  }
+
+  return (
+    <div className="divForm">
+      <form
+        className="logiform"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const newErrors = validation();
+          setErrors(newErrors);
+          if (Object.keys(newErrors).length === 0) {
+            alert("Помилок немає");
+          }
+        }}
+      >
+        <h3>Sign In</h3>
+        <div className="row">
+          <div className="blockOfForm">
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              className={errors.name ? "error" : ""}
+            />
+            {errors.name != "" && <span className="error">{errors.name}</span>}
+          </div>
+          <div className="blockOfForm">
+            <input
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={formData.age}
+              onChange={handleChange}
+              className={errors.age ? "error" : ""}
+            />
+            {errors.age && <span className="error">{errors.age}</span>}
+          </div>
+        </div>
+        <div className="row">
+          <div className="blockOfForm">
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? "error" : ""}
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
+          <div className="blockOfForm">
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className={errors.gender ? "error" : ""}
+            >
+              <option>Man</option>
+              <option>Woman</option>
+              <option>None</option>
+              <option>Croissant</option>
+            </select>
+
+            {errors.gender && <span className="error">{errors.gender}</span>}
+          </div>
+        </div>
+        <button type="submit">Submit</button>
+
+        {/* <p>{formData.name}</p>
+        <p>{formData.age}</p>
+        <p>{formData.email}</p>
+        <p>{formData.gender}</p> */}
+      </form>
+    </div>
+  );
+}
+
 export default function App() {
-  const [theme, setTheme] = useState("");
-  const [isPressed, setIsPressed] = useState(false);
   return (
     <>
-      {/* <main>
-        <PagesWindow />
-      </main> */}
-      <Func />
+      <RegisterForm />
     </>
   );
 }
