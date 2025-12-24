@@ -72,12 +72,12 @@ function Func() {
   );
 }
 
-function RegisterForm() {
+function NewTaskForm({ callbackfunc, callbackPressed }) {
   const [formData, setFormData] = useState({
-    name: "",
-    age: "",
-    email: "",
-    gender: "Man",
+    title: "",
+    date: "",
+    priority: "",
+    desc: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -91,113 +91,201 @@ function RegisterForm() {
 
   function validation() {
     const newErrors = {};
-    if (formData.name.trim() === "") {
-      newErrors.name = "Поле не може бути порожнім!";
-    } else if (formData.name.trim().length < 3) {
-      newErrors.name = "Ім'я повинно містити щонайменше 3 символи!";
+    if (formData.title.trim() === "") {
+      newErrors.title = "Поле не може бути порожнім!";
+    } else if (formData.title.trim().length < 3) {
+      newErrors.title = "title повинно містити щонайменше 3 символи!";
     }
-    if (formData.age.trim() === "") {
+    if (formData.date.trim() === "") {
       newErrors.age = "Поле не може бути порожнім!";
-    } else if (formData.age < 0) {
-      newErrors.age = "Вік не може бути від'ємним";
+    } //else if (formData.age < 0) {
+    //   newErrors.age = "Вік не може бути від'ємним";
+    // }
+    if (formData.priority.trim() === "") {
+      newErrors.priority = "Не може бути порожнім!";
     }
-    if (formData.email.trim() === "") {
-      newErrors.email = "Поле не може бути порожнім!";
-    } else if (formData.email.startsWith("@")) {
-      newErrors.email = "Емаіл не може починатися з @!";
-    } else if (formData.email.endsWith("@")) {
-      newErrors.email = "Емаіл не може закінчуватися на @!";
-    } else if (!formData.email.includes("@")) {
-      newErrors.email = "Емаіл має включати @!";
+    if (formData.desc.trim() === "") {
+      newErrors.desc = "Поле не може бути порожнім!";
     }
-    if (formData.gender.trim() === "Croissant") {
-      newErrors.gender = "Ви не круасан!";
-    }
-
     return newErrors;
   }
 
   return (
     <div className="divForm">
-      <form
-        className="logiform"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const newErrors = validation();
-          setErrors(newErrors);
-          if (Object.keys(newErrors).length === 0) {
-            alert("Помилок немає");
-          }
-        }}
-      >
-        <h3>Sign In</h3>
+      <div className="NewTaskForm">
         <div className="row">
+          <span className="h3">Add New Task</span>
+          <button> Go back</button>
+        </div>
+        <form
+          className="logiform"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const newErrors = validation();
+            setErrors(newErrors);
+            if (Object.keys(newErrors).length === 0) {
+              callbackfunc(formData);
+              callbackPressed();
+              alert("Помилок немає");
+            }
+          }}
+        >
+          <span>Title</span>{" "}
+          {errors.title != "" && <span className="error">{errors.title}</span>}
           <div className="blockOfForm">
             <input
               type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
+              name="title"
+              placeholder="Title"
+              value={formData.title}
               onChange={handleChange}
-              className={errors.name ? "error" : ""}
+              className={errors.title ? "error" : ""}
             />
-            {errors.name != "" && <span className="error">{errors.name}</span>}
           </div>
+          <span>Date</span>{" "}
+          {errors.date && <span className="error">{errors.date}</span>}
           <div className="blockOfForm">
             <input
-              type="number"
-              name="age"
-              placeholder="Age"
-              value={formData.age}
+              type="Date"
+              name="date"
+              placeholder="Date"
+              value={formData.date}
               onChange={handleChange}
-              className={errors.age ? "error" : ""}
+              className={errors.date ? "error" : ""}
             />
-            {errors.age && <span className="error">{errors.age}</span>}
           </div>
-        </div>
-        <div className="row">
+          <span>Priority</span>{" "}
+          {errors.priority && <span className="error">{errors.priority}</span>}
+          <div className="row">
+            <div className="rowBlockOfForm">
+              <span className="Extreme">
+                Extreme{" "}
+                <input
+                  type="radio"
+                  name="priority"
+                  value="Extreme"
+                  onChange={handleChange}
+                  className={errors.priority ? "error" : ""}
+                />
+              </span>
+              <span className="Moderate">
+                Moderate{" "}
+                <input
+                  type="radio"
+                  name="priority"
+                  value="Moderate"
+                  onChange={handleChange}
+                  className={errors.priority ? "error" : ""}
+                />
+              </span>
+              <span className="Low">
+                Low{" "}
+                <input
+                  type="radio"
+                  name="priority"
+                  value="Low"
+                  onChange={handleChange}
+                  className={errors.priority ? "error" : ""}
+                />
+              </span>
+            </div>
+          </div>
+          <span>Task Description</span>{" "}
+          {errors.desc && <span className="error">{errors.desc}</span>}
           <div className="blockOfForm">
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
+            <textarea
+              name="desc"
+              placeholder="Description"
+              value={formData.desc}
               onChange={handleChange}
-              className={errors.email ? "error" : ""}
-            />
-            {errors.email && <span className="error">{errors.email}</span>}
+              className={errors.desc ? "error" : ""}
+            ></textarea>
           </div>
-          <div className="blockOfForm">
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className={errors.gender ? "error" : ""}
-            >
-              <option>Man</option>
-              <option>Woman</option>
-              <option>None</option>
-              <option>Croissant</option>
-            </select>
-
-            {errors.gender && <span className="error">{errors.gender}</span>}
-          </div>
-        </div>
-        <button type="submit">Submit</button>
-
-        {/* <p>{formData.name}</p>
-        <p>{formData.age}</p>
-        <p>{formData.email}</p>
-        <p>{formData.gender}</p> */}
-      </form>
+          <button type="submit">Submit</button>
+          {/* <p>{formData.title}</p>
+          <p>{formData.date}</p>
+          <p>{formData.priority}</p>
+          <p>{formData.desc}</p> */}
+        </form>
+      </div>
     </div>
   );
 }
 
-export default function App() {
+function Task({ task }) {
   return (
     <>
-      <RegisterForm />
+      <div>
+        <h3>{task.title}</h3>
+        <p>{task.desc}</p>
+        <div className="row">
+          <span>Priority: {task.priority}</span>
+          <span>Date: {task.date}</span>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function ToDolist({ ToDoInfo }) {
+  console.log(Object.values(ToDoInfo.tasks)[0].a.title); // test version
+  return (
+    <>
+      <div className="row">
+        <span>To-Do</span>
+        <button onClick={ToDoInfo.callbackPressed}>Add-Task</button>
+      </div>
+      <div className="collumn">
+        {/* <Task task={ToDoInfo.tasks[0]} /> */}
+        {/* <Task task={ToDoInfo.tasks[1]} /> */}
+      </div>
+    </>
+  );
+}
+
+function Main({ TaskInfo }) {
+  const [pressed, setPressed] = useState(true);
+  return (
+    <>
+      {pressed == true ? (
+        <>
+          <div className="row">
+            <span>Welcome back, {TaskInfo.name}</span>
+          </div>
+          <div className="genToDolist">
+            <ToDolist
+              ToDoInfo={{
+                callbackfunc: TaskInfo.callbackfunc,
+                callbackPressed: () => setPressed(false),
+                tasks: TaskInfo.tasks,
+              }}
+            />
+          </div>
+        </>
+      ) : (
+        <NewTaskForm
+          callbackfunc={TaskInfo.callbackfunc}
+          callbackPressed={() => setPressed(true)}
+        />
+      )}
+    </>
+  );
+}
+
+export default function App() {
+  const [tasks, setTask] = useState();
+  return (
+    <>
+      {/* <NewTaskForm /> */}
+      <Main
+        TaskInfo={{
+          name: "name123",
+          tasks: { tasks },
+          callbackfunc: (a) => {
+            setTask((prev) => ({ ...prev, a }));
+          },
+        }}
+      />
     </>
   );
 }

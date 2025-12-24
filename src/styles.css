@@ -54,21 +54,28 @@ select.error {
   border-color: red;
 }
 div.divForm {
+  position: absolute;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 100vw;
 }
 
-form.logiform {
-  background-color: rgb(219, 219, 219);
-  padding: 10px;
+div.NewTaskForm {
+  background-color: rgb(240, 237, 237);
+  padding: 30px;
   padding-bottom: 20px;
   border-top: 3px solid rgb(25, 188, 252) !important;
   border: 0px solid grey;
-  width: 300px;
+  width: 500px;
   box-shadow: 5px 5px 5px rgb(46, 45, 45);
+}
+
+form.logiform {
+  padding: 10px;
+  border: 1px solid rgb(211, 210, 210);
 }
 form.logiform > div > div > select,
 input {
@@ -87,16 +94,49 @@ select:focus {
 }
 
 form.logiform > button {
-  width: 100%;
+  width: 80px;
   border: 0px solid black;
-  background-color: rgb(33, 158, 189);
+  background-color: rgb(231, 105, 2);
+  color: white;
+  border-radius: 5px;
   padding: 10px;
 }
-form.logiform > div.row {
+div.row {
   display: flex;
   justify-content: space-between;
   margin: 10px 0 20px 0;
 }
+
+div.rowBlockOfForm {
+  display: flex;
+  flex-direction: row;
+}
+div.rowBlockOfForm > span {
+  display: flex;
+  padding: 5px;
+}
+/* div.rowBlockOfForm > span.Extreme::before {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+} */
+
+div.row > span.h3 {
+  font-weight: 500;
+  border-bottom: 1px solid rgb(231, 105, 2) !important;
+}
+div.row > button {
+  font-weight: 500;
+  text-decoration: underline;
+  border: none;
+}
+
+textarea {
+  resize: none;
+  width: 300px;
+  height: 120px;
+}
+
 form.logiform > div.blockOfForm {
   width: 130px;
   display: flex;
@@ -110,4 +150,9 @@ form.logiform > div.row > div.blockOfForm {
 form.logiform > h3 {
   display: flex;
   justify-content: center;
+}
+
+div.collumn {
+  display: flex;
+  flex-direction: column;
 }
